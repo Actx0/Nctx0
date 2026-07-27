@@ -35,6 +35,27 @@ await client.health();
 await client.knowledge.list();
 ```
 
+#### Examples
+
+Fill in `ACCESS_KEY`, `WORKSPACE_ID`, and (for chat examples) `OPENROUTER_KEY` in the example files, then:
+
+```bash
+npx tsx examples/01_me.ts
+npx tsx examples/02_docs.ts
+npx tsx examples/03_agents.ts
+npx tsx examples/04_prompts.ts
+npx tsx examples/07_sessions.ts
+```
+
+Interactive assistants (also need indexed docs from `02_docs.ts`):
+
+```bash
+npx tsx examples/05_messages_list.ts
+npx tsx examples/05_messages_search.ts
+npx tsx examples/06_memories_list.ts
+npx tsx examples/06_memories_search.ts
+```
+
 #### Development
 
 ```bash
