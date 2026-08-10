@@ -8,3 +8,4 @@ coverage/
 __pycache__/
 .pytest_cache/
 .ruff_cache/
+.cursor/commands/commit.md

@@ -1,0 +1,22 @@
+---
+description: Keep git commit messages lowercase
+alwaysApply: true
+---
+
+# Commit message casing
+
+All git commit messages must be **lowercase**, including the type/prefix and subject.
+
+```text
+# ❌ BAD
+feat: Update API Docs
+Docs: Expand Introduction
+
+# ✅ GOOD
+feat: update api docs
+docs: expand introduction
+```
+
+- Prefer conventional commits: `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `style:`
+- Keep the full subject line lowercase (acronyms too: `api`, `sdk`, `mcp`)
+- If the user supplies a message, lowercase it before committing unless they explicitly ask to preserve casing
