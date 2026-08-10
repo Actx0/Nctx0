@@ -32,18 +32,34 @@ export type ListMeta = {
   total: number;
 };
 
+export type AgentConfigs = {
+  memoryPipeline: boolean;
+};
+
 export type Agent = {
   id: string;
   workspaceId: string;
   name: string;
   kind: string;
-  promptId: string | null;
-  kbLabels: Record<string, string>;
+  /** Omitted when empty. */
+  promptId?: string | null;
+  /** Omitted when empty. */
+  kbLabels?: Record<string, string>;
   handle: string;
   description: string;
   status: string;
+  configs: AgentConfigs;
   createdAt: string;
   updatedAt: string;
+};
+
+export type AgentWriteOptions = {
+  name: string;
+  description: string;
+  /** Omit or leave unset → memoryPipeline defaults to false on the server. */
+  configs?: {
+    memoryPipeline?: boolean;
+  };
 };
 
 export type AgentList = {

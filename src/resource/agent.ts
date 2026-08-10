@@ -1,7 +1,7 @@
 // Copyright 2026 Actx0. All rights reserved.
 // License can be found in the LICENSE file.
 
-import type { Agent, AgentList } from "../types.js";
+import type { Agent, AgentList, AgentWriteOptions } from "../types.js";
 import { buildQueryParams } from "../utils.js";
 import { Resource } from "./base.js";
 
@@ -9,6 +9,17 @@ type AgentListResponse = {
   agents: Agent[];
   _meta: { limit: number; offset: number; total: number };
 };
+
+function agentWriteBody(options: AgentWriteOptions): Record<string, unknown> {
+  const body: Record<string, unknown> = {
+    name: options.name,
+    description: options.description,
+  };
+  if (options.configs !== undefined) {
+    body.configs = options.configs;
+  }
+  return body;
+}
 
 export class Agents extends Resource {
   async list(options: { limit?: number; offset?: number } = {}): Promise<AgentList> {
@@ -29,15 +40,15 @@ export class Agents extends Resource {
     return this.request<Agent>("GET", this.workspacePath("agents", agentId));
   }
 
-  async create(options: { name: string; description: string }): Promise<Agent> {
+  async create(options: AgentWriteOptions): Promise<Agent> {
     return this.request<Agent>("POST", this.workspacePath("agents"), {
-      json: { name: options.name, description: options.description },
+      json: agentWriteBody(options),
     });
   }
 
-  async update(agentId: string, options: { name: string; description: string }): Promise<Agent> {
+  async update(agentId: string, options: AgentWriteOptions): Promise<Agent> {
     return this.request<Agent>("PUT", this.workspacePath("agents", agentId), {
-      json: { name: options.name, description: options.description },
+      json: agentWriteBody(options),
     });
   }
 

@@ -111,10 +111,12 @@ describe("nctx0 client", () => {
     const agents = await client.agent.list();
     expect(agents.total).toBeGreaterThanOrEqual(1);
     expect(agents.agents[0]?.name).toBe("Support bot");
+    expect(agents.agents[0]?.configs.memoryPipeline).toBe(false);
 
     const agent = await client.agent.get(DEFAULT_AGENT_ID);
     expect(agent.id).toBe(DEFAULT_AGENT_ID);
     expect(agent.kind).toBe("unmanaged");
+    expect(agent.configs).toEqual({ memoryPipeline: false });
   });
 
   it("agent create update delete", async () => {
@@ -123,13 +125,24 @@ describe("nctx0 client", () => {
       description: "Test bot",
     });
     expect(created.name).toBe("Bot");
+    expect(created.configs.memoryPipeline).toBe(false);
+
+    const withPipeline = await client.agent.create({
+      name: "Memory bot",
+      description: "Test bot with memory pipeline",
+      configs: { memoryPipeline: true },
+    });
+    expect(withPipeline.configs.memoryPipeline).toBe(true);
 
     const updated = await client.agent.update(created.id, {
       name: "Renamed bot",
       description: "Updated description",
+      configs: { memoryPipeline: true },
     });
     expect(updated.name).toBe("Renamed bot");
+    expect(updated.configs.memoryPipeline).toBe(true);
     await client.agent.delete(created.id);
+    await client.agent.delete(withPipeline.id);
   });
 
   it("document list search upload", async () => {

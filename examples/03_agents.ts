@@ -23,6 +23,7 @@ async function main(): Promise<void> {
   const created = await client.agent.create({
     name: "Mara assistant",
     description: "Answers questions about Mara Ellison from the docs knowledge base.",
+    configs: { memoryPipeline: true },
   });
   console.log("Created");
   console.log("=".repeat(40));
@@ -32,7 +33,9 @@ async function main(): Promise<void> {
   console.log(`\nListed (total=${listed.total})`);
   console.log("=".repeat(40));
   for (const agent of listed.agents) {
-    console.log(`  ${agent.id}  ${agent.name}  status=${agent.status}`);
+    console.log(
+      `  ${agent.id}  ${agent.name}  status=${agent.status}  memoryPipeline=${agent.configs.memoryPipeline}`,
+    );
   }
 
   const fetched = await client.agent.get(created.id);
@@ -43,6 +46,7 @@ async function main(): Promise<void> {
   const updated = await client.agent.update(created.id, {
     name: "Mara assistant v2",
     description: "Updated description for the Mara docs agent.",
+    configs: { memoryPipeline: true },
   });
   console.log("\nUpdated");
   console.log("=".repeat(40));

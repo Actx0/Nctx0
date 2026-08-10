@@ -25,6 +25,7 @@ function defaultAgent(agentId = DEFAULT_AGENT_ID): Json {
     handle: "a8k2m9x1",
     description: "Handles customer questions",
     status: "active",
+    configs: { memoryPipeline: false },
     createdAt: TIMESTAMP,
     updatedAt: TIMESTAMP,
   };
@@ -248,7 +249,12 @@ export class LocalServer {
     return undefined;
   }
 
-  private agentObject(agentId: string, name: string, description: string): Json {
+  private agentObject(
+    agentId: string,
+    name: string,
+    description: string,
+    memoryPipeline = false,
+  ): Json {
     return {
       id: agentId,
       workspaceId: DEFAULT_WORKSPACE_ID,
@@ -259,9 +265,18 @@ export class LocalServer {
       handle: shortId(),
       description,
       status: "active",
+      configs: { memoryPipeline },
       createdAt: TIMESTAMP,
       updatedAt: TIMESTAMP,
     };
+  }
+
+  private memoryPipelineFromBody(body: Json): boolean {
+    const configs = body.configs;
+    if (!configs || typeof configs !== "object" || Array.isArray(configs)) {
+      return false;
+    }
+    return Boolean((configs as Json).memoryPipeline);
   }
 
   private documentObject(options: {
@@ -512,7 +527,12 @@ export class LocalServer {
           return { status: 403, data: { errorMessage: "Write requires user API key." } };
         }
         const agentId = `agt_${shortId()}`;
-        const agent = this.agentObject(agentId, body.name as string, body.description as string);
+        const agent = this.agentObject(
+          agentId,
+          body.name as string,
+          body.description as string,
+          this.memoryPipelineFromBody(body),
+        );
         this.store.agents.set(agentId, agent);
         return { status: 201, data: agent };
       }
@@ -817,6 +837,7 @@ export class LocalServer {
         }
         agent.name = body.name;
         agent.description = body.description;
+        agent.configs = { memoryPipeline: this.memoryPipelineFromBody(body) };
         agent.updatedAt = TIMESTAMP;
         return { status: 200, data: agent };
       }
