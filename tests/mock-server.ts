@@ -440,7 +440,7 @@ export class LocalServer {
     form: Record<string, string | { filename: string; content: Buffer }>,
     req: IncomingMessage,
   ): { status: number; data?: Json | null } {
-    if (method === "GET" && path === "/api/v1/_health") {
+    if (method === "GET" && path === "/api/v1/public/_health") {
       return { status: 200, data: { status: "ok" } };
     }
 
@@ -486,7 +486,7 @@ export class LocalServer {
       return {
         status: 200,
         data: {
-          principalType: "access_key",
+          principalType: "ACCESS_KEY",
           accessKey: {
             id: "wkey_ghi789",
             workspaceId: DEFAULT_WORKSPACE_ID,

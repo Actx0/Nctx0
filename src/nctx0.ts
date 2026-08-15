@@ -34,7 +34,7 @@ export class Nctx0Client extends BaseClient {
   }
 
   async health(): Promise<Record<string, unknown>> {
-    return this.request<Record<string, unknown>>("GET", "/api/v1/_health");
+    return this.request<Record<string, unknown>>("GET", "/api/v1/public/_health");
   }
 }
 

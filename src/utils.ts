@@ -97,7 +97,7 @@ export function encodeUpdateBody(options: {
 }
 
 export function parseMePrincipal(data: Record<string, unknown>): AccessKeyPrincipal {
-  const principalType = data.principalType;
+  const principalType = String(data.principalType ?? "").toLowerCase();
   if (principalType === "access_key") {
     const accessKey = data.accessKey as AccessKeyPrincipal["accessKey"];
     return {
@@ -105,7 +105,7 @@ export function parseMePrincipal(data: Record<string, unknown>): AccessKeyPrinci
       accessKey,
     };
   }
-  throw new Error(`unknown principalType: ${String(principalType)}`);
+  throw new Error(`unknown principalType: ${String(data.principalType)}`);
 }
 
 export function prepareFile(file: FileInput): PreparedFile {
