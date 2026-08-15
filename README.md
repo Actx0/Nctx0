@@ -1,4 +1,4 @@
-### @actx0/nctx0
+### Nctx0 Package
 
 Node.js client for the Actx0 platform.
 
