@@ -20,7 +20,7 @@ export class BaseClient {
   protected workspaceId: string | undefined;
 
   constructor(options: ClientOptions = {}) {
-    this.baseUrl = (options.baseUrl ?? "https://actx0.com").replace(/\/$/, "");
+    this.baseUrl = (options.baseUrl ?? "https://app.actx0.com").replace(/\/$/, "");
     this.timeout = options.timeout ?? 30_000;
     this.accessKey = options.accessKey;
     this.workspaceId = options.workspaceId;

@@ -16,7 +16,7 @@ import { Nctx0Client } from "../src/index.js";
 
 const ACCESS_KEY = "~~";
 const WORKSPACE_ID = "~~";
-const BASE_URL = "https://actx0.com";
+const BASE_URL = "https://app.actx0.com";
 
 const DOCS_DIR = join(dirname(fileURLToPath(import.meta.url)), "docs");
 const LABELS = { tag: "docs", team: "platform-team" };

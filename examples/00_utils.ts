@@ -13,7 +13,7 @@ import type {
 
 export const ACCESS_KEY = "~~";
 export const WORKSPACE_ID = "~~";
-export const BASE_URL = "https://actx0.com";
+export const BASE_URL = "https://app.actx0.com";
 
 export const OPENROUTER_KEY = "~~";
 export const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
